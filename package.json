@@ -1,0 +1,16 @@
+{
+  "name": "youtube-schedule",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "deasync": "^0.1.9",
+    "dotenv": "^4.0.0",
+    "ytdl-core": "^0.10.0"
+  }
+}
