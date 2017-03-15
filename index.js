@@ -2,22 +2,25 @@ require('dotenv').load();
 var yt = require('./yt.js');
 var pj = require('path').join;
 var ytdl = require('ytdl-core');
+var drive = require('./drive.js');
 var fs = require('fs');
 var deasync = require('deasync');
+var drive = require('./drive.js');
 
 var pathlist = pj(__dirname,"playlist");
 var pathdownload = pj(__dirname,"downloads");
 var todo = [];
 var exists = [];
+var parentFolderId = "0Bw4F4s3cgDcwSHZuVGRjRm1ybUE";
 
-readList();
-getDifference(function(){
-	console.log("Videos to be downloaded: ",todo.length);
-	downloadDifference();
-	console.log("done and done");
+drive.init(function(){
+	readList();
+	getDifference(function(){
+		console.log("Videos to be downloaded: ",todo.length);
+		downloadDifference();
+		console.log("done and done");
+	});
 });
-
-console.log("");
 
 
 function readList() {
@@ -70,10 +73,19 @@ function downloadSingle(info){
 	});
 	deasync.loopWhile(function(){return !finished;});
 	console.log(info.title,(Date.now()-time)/1000);
+	finished = false;
 	registerDownloaded(info);
+	uploadToDrive(info,function(){
+		finished = true;
+	});
+	deasync.loopWhile(function(){return !finished;});
 }
 
 function registerDownloaded(info){
 	var data = info.title+"\n"+info.video_id+"\n";
 	fs.appendFileSync(pathlist,data,'utf-8');
+}
+
+function uploadToDrive(info,callback){
+	drive.uploadFileWithParent(info.title+".mp3",parentFolderId,fs.createReadStream(pj(pathdownload,info.title+".mp3")),callback);
 }
