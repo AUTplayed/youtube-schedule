@@ -6,7 +6,7 @@ var ytdl = require('ytdl-core');
 
 //Declarations
 var baseurl = "https://www.googleapis.com/youtube/v3/";
-var key = process.env.YTAPIKEY;
+var key = process.env.GOOGLEAPIKEY;
 
 //Module exports
 module.exports.get = get;
