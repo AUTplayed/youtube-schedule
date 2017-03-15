@@ -21,7 +21,7 @@ module.exports = function (scope, callback) {
     } else {
       oauth2Client.credentials = JSON.parse(token);
       google.options({
-        auth: oa2c
+        auth: oauth2Client
       });
       callback(google);
     }
