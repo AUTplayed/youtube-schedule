@@ -32,7 +32,6 @@ function uploadFile(resource,media,callback) {
 		media: media
 	}, function (err, res) {
 		if (err) console.log("error", err);
-		if (res) console.log("uploaded: ", res.name);
 		callback();
 	});
 }
