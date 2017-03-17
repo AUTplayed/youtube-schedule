@@ -1,4 +1,4 @@
-require('dotenv').load();
+require('dotenv').config({path:__dirname});
 var yt = require('./yt.js');
 var pj = require('path').join;
 var ytdl = require('ytdl-core');
