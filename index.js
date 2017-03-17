@@ -19,6 +19,7 @@ drive.init(function () {
 	getDifference(function () {
 		console.log("Videos to be downloaded: ", todo.length);
 		downloadDifference();
+		fs.rmdirSync(pathdownload);
 		console.log("done and done");
 	});
 });
@@ -57,6 +58,9 @@ function isNew(video_id) {
 }
 
 function downloadDifference() {
+	if(!fs.existsSync(pathdownload)){
+		fs.mkdirSync(pathdownload);
+	}
 	todo.forEach(function (info) {
 		downloadSingle(info);
 	});

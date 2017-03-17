@@ -1,6 +1,7 @@
 var google = require('googleapis');
 var readline = require('readline');
 var fs = require("fs");
+var pj = require('path').join;
 
 module.exports = function (scope, callback) {
   var OAuth2 = google.auth.OAuth2;
@@ -10,7 +11,7 @@ module.exports = function (scope, callback) {
     process.env.REDIRECTURL
   );
 
-  fs.readFile(process.env.TOKENPATH, function (err, token) {
+  fs.readFile(pj(__dirname,process.env.TOKENPATH), function (err, token) {
     if (err) {
       getNewToken(oauth2Client, scope, function (oa2c) {
         google.options({
@@ -45,7 +46,7 @@ function getNewToken(oauth2Client, scope, callback) {
         console.log('Error while trying to retrieve access token', err);
         return;
       }
-      fs.writeFile(process.env.TOKENPATH, JSON.stringify(token));
+      fs.writeFile(pj(__dirname,process.env.TOKENPATH), JSON.stringify(token));
       oauth2Client.credentials = token;
       callback(oauth2Client);
     });
