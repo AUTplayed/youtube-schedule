@@ -79,7 +79,7 @@ function downloadSingle(info) {
 	console.log("downloaded: ", info.title, (Date.now() - time) / 1000, "s");
 	time = Date.now();
 	finished = false;
-	convertToMp3(info, function (succ) {
+	convertToAac(info, function (succ) {
 		finished = true;
 	});
 	deasync.loopWhile(function () { return !finished; });
@@ -100,11 +100,11 @@ function registerDownloaded(info) {
 }
 
 function uploadToDrive(info, callback) {
-	drive.uploadFileWithParent(info.title+".mp3",parentFolderId,fs.createReadStream(pj(pathdownload,info.title+".mp3")),callback);
+	drive.uploadFileWithParent(info.title+".aac",parentFolderId,fs.createReadStream(pj(pathdownload,info.title+".aac")),callback);
 }
 
-function convertToMp3(info, callback) {
-	var ffmpeg = bash.spawn("ffmpeg", ["-i", pj(pathdownload,info.title + ".mp4"), pj(pathdownload,info.title + ".mp3")]);
+function convertToAac(info, callback) {
+	var ffmpeg = bash.spawn("ffmpeg", ["-i", pj(pathdownload,info.title + ".mp4"), pj(pathdownload,info.title + ".aac")]);
 	ffmpeg.on('close', function (code) {
 		callback(code === 0);
 	});
