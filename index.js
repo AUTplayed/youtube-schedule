@@ -19,7 +19,7 @@ drive.init(function () {
 	getDifference(function () {
 		console.log("Videos to be downloaded: ", todo.length);
 		downloadDifference();
-		fs.rmdirSync(pathdownload);
+		rmDownloads();
 		console.log("done and done");
 	});
 });
@@ -108,4 +108,8 @@ function convertToAac(info, callback) {
 	ffmpeg.on('close', function (code) {
 		callback(code === 0);
 	});
+}
+
+function rmDownloads(){
+	bash.exec("rm -R "+pathdownload);
 }
