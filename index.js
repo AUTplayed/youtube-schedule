@@ -12,7 +12,6 @@ var pathlist = pj(__dirname, "playlist");
 var pathdownload = pj(__dirname, "downloads");
 var todo = [];
 var exists = [];
-var parentFolderId = "0Bw4F4s3cgDcwSHZuVGRjRm1ybUE";
 
 drive.init(function () {
 	readList();
@@ -43,7 +42,7 @@ function readList() {
 }
 
 function getDifference(callback) {
-	yt.get("https://www.youtube.com/playlist?list=PLZoTZYx2UoVROAMCR0BueKAC3zbKOyu_o", function (info) {
+	yt.get(process.env.PLAYLISTURL, function (info) {
 		if (isNew(info.video_id)) {
 			todo.push(info);
 		}
@@ -100,7 +99,7 @@ function registerDownloaded(info) {
 }
 
 function uploadToDrive(info, callback) {
-	drive.uploadFileWithParent(info.title+".aac",parentFolderId,fs.createReadStream(pj(pathdownload,info.title+".aac")),callback);
+	drive.uploadFileWithParent(info.title+".aac",process.env.PARENTFOLDERID,fs.createReadStream(pj(pathdownload,info.title+".aac")),callback);
 }
 
 function convertToAac(info, callback) {
