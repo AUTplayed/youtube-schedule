@@ -69,20 +69,20 @@ function downloadSingle(info) {
 	var time = Date.now();
 	var finished = false;
 	var readstream = ytdl.downloadFromInfo(info);
-	var writestream = fs.createWriteStream(pj(pathdownload, info.title + ".mp4"));
+	var writestream = fs.createWriteStream(pj(pathdownload, info.title.clean() + ".mp4"));
 	var downloadstream = readstream.pipe(writestream);
 	readstream.on('end', function () {
 		finished = true;
 	});
 	deasync.loopWhile(function () { return !finished; });
-	console.log("downloaded: ", info.title, (Date.now() - time) / 1000, "s");
+	console.log("downloaded: ", info.title.clean(), (Date.now() - time) / 1000, "s");
 	time = Date.now();
 	finished = false;
 	convertToAac(info, function (succ) {
 		finished = true;
 	});
 	deasync.loopWhile(function () { return !finished; });
-	console.log("converted: ", info.title, (Date.now() - time) / 1000, "s");
+	console.log("converted: ", info.title.clean(), (Date.now() - time) / 1000, "s");
 	time = Date.now();
 	finished = false;
 	registerDownloaded(info);
@@ -90,20 +90,20 @@ function downloadSingle(info) {
 		finished = true;
 	});
 	deasync.loopWhile(function () { return !finished; });
-	console.log("uploaded: ", info.title, (Date.now() - time) / 1000, "s");
+	console.log("uploaded: ", info.title.clean(), (Date.now() - time) / 1000, "s");
 }
 
 function registerDownloaded(info) {
-	var data = info.title + "\n" + info.video_id + "\n";
+	var data = info.title.clean() + "\n" + info.video_id + "\n";
 	fs.appendFileSync(pathlist, data, 'utf-8');
 }
 
 function uploadToDrive(info, callback) {
-	drive.uploadFileWithParent(info.title+".aac",process.env.PARENTFOLDERID,fs.createReadStream(pj(pathdownload,info.title+".aac")),callback);
+	drive.uploadFileWithParent(info.title.clean()+".aac",process.env.PARENTFOLDERID,fs.createReadStream(pj(pathdownload,info.title.clean()+".aac")),callback);
 }
 
 function convertToAac(info, callback) {
-	var ffmpeg = bash.spawn("ffmpeg", ["-i", pj(pathdownload,info.title + ".mp4"), pj(pathdownload,info.title + ".aac")]);
+	var ffmpeg = bash.spawn("ffmpeg", ["-i", pj(pathdownload,info.title.clean() + ".mp4"), pj(pathdownload,info.title.clean() + ".aac")]);
 	ffmpeg.on('close', function (code) {
 		callback(code === 0);
 	});
@@ -111,4 +111,8 @@ function convertToAac(info, callback) {
 
 function rmDownloads(){
 	bash.exec("rm -R "+pathdownload);
+}
+
+String.prototype.clean = function(){
+	return this.replace(/\/|\\/g," ");
 }
