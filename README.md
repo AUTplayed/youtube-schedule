@@ -14,6 +14,8 @@ To use this program you need to clone or download this repo and execute `npm i`.
 
 You can get google oauth credentials <a href="https://console.developers.google.com/apis/credentials">here</a>
 
+**NOTE: the required scope is https://www.googleapis.com/auth/drive**
+
 Here's how to do it, quote from `node setup.js --help`
 ```
 Either provide clientid, clientsecret and scope via a .env file in the root directory like this:
