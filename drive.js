@@ -6,9 +6,9 @@ module.exports.uploadFile = uploadFile;
 module.exports.uploadFileWithParent = uploadFileWithParent;
 
 function init(callback) {
-	require('./google.js').getSavedClient(function (gl) {
+	require('./google.js').getSavedClient(function (gl,scope) {
 		google = gl;
-		if(google.scope.toString().indexOf('https://www.googleapis.com/auth/drive') == -1){
+		if(scope.toString().indexOf('https://www.googleapis.com/auth/drive') == -1){
 			console.log("Wrong scope used, requiring 'https://www.googleapis.com/auth/drive' scope");
 			process.exit();
 		}

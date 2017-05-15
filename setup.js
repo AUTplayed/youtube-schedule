@@ -38,7 +38,8 @@ else console.log(infolog + "8080)");
 
 function getInfo() {
     if (args.options.scope) {
-        args.options.scope = args.options.scope.join(" ");
+        if(args.options.scope.constructor == Array)
+            args.options.scope = args.options.scope.join(" ");
     }
     Object.assign(args.options, process.env);
     if (args.options.clientid && args.options.clientsecret && args.options.scope) {

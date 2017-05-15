@@ -45,7 +45,7 @@ function readList() {
 }
 
 function getDifference(callback) {
-	yt.get(args.options.url || process.env.playlisturl, function (info) {
+	yt.get(args.options.url || process.env.playlisturl, args.options.apikey || process.env.apikey, function (info) {
 		if (isNew(info.video_id)) {
 			todo.push(info);
 		}
@@ -132,6 +132,11 @@ function getOptions() {
             short: 'f',
             type: 'string',
             description: 'Your folder id where the music ends up in'
-        }
+        },{
+			name: 'apikey',
+			short: 'k',
+			type: 'string',
+			description: 'Your youtube data v3 api key'
+		}
     ];
 }

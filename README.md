@@ -45,6 +45,7 @@ Make sure you run setup.js once before!
 Either provide folderid and playlisturl via a .env file in the root directory like this: 
 parentfolderid=<id>
 playlisturl=<url>
+apikey=<key>
 or via the arguments explained below
 
 	--url, -u
@@ -52,5 +53,8 @@ or via the arguments explained below
 
 	--folderid, -f
 		Your folder id where the music ends up in
+
+    --apikey, -k
+                    Your youtube data v3 api key
 
 ```

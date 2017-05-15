@@ -6,12 +6,13 @@ var ytdl = require('ytdl-core');
 
 //Declarations
 var baseurl = "https://www.googleapis.com/youtube/v3/";
-var key = process.env.GOOGLEAPIKEY;
+var key;
 
 //Module exports
 module.exports.get = get;
 
-function get(q, followup, finished) {
+function get(q, k, followup, finished) {
+    key = k;
     if (q.startsWith("https://www.youtube.com/")) {
         if (q.startsWith("https://www.youtube.com/watch?v=")) {
             getVideo(filterId(q, "v"), followup, finished);

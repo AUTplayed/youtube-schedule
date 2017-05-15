@@ -59,7 +59,7 @@ function getSavedClient(callback) {
     google.options({
       auth: oauth2Client
     });
-    callback(google);
+    callback(google,gc.scope);
   });
 }
 
