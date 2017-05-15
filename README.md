@@ -8,13 +8,49 @@ To use this program you need to clone or download this repo and execute `npm i`.
 
 **ffmpeg** is required.
 
-Also required is a file with the name `.env` in the root directory of the cloned repo.
+## How to run
 
-Values for .env are:
-- GOOGLEAPIKEY=".."   your google api key for youtube data v3
-- CLIENTID="..."   your client id for google drive oauth
-- CLIENTSECRET="..." your client secret for google drive oauth
-- REDIRECTURL="..." your redirect url for oauth (pretty much useless, just input the query params from the url"
-- TOKENPATH="..." your path to the .token file where a oauth token will be saved (relative to root dir of repo)
-- PARENTFOLDERID="..." your id of the folder on your google drive where the songs are being uploaded to
-- PLAYLISTURL="..." your full playlist url from where the program will download new songs
+**Before starting you have to set up oauth with your credidentials**
+
+You can get google oauth credentials <a href="https://console.developers.google.com/apis/credentials">here</a>
+
+Here's how to do it, quote from `node setup.js --help`
+```
+Either provide clientid, clientsecret and scope via a .env file in the root directory like this:
+clientid=<id>
+clientsecret=<secret>
+scope=<scope1> <scope2>
+or via the arguments explained below
+
+        --clientid, -i
+                Your oauth client id
+
+        --clientsecret, -s
+                Your oauth client secret
+
+        --scope, -c
+                The scope used
+                -c <scopeurl1> -c <scopeurl2>
+
+        --port, -p
+                The port used
+
+```
+
+**After a successful setup you can continue with the main program**
+
+Quote from `node index.js --help`: 
+```
+Make sure you run setup.js once before! 
+Either provide folderid and playlisturl via a .env file in the root directory like this: 
+parentfolderid=<id>
+playlisturl=<url>
+or via the arguments explained below
+
+	--url, -u
+		Your public playlist url
+
+	--folderid, -f
+		Your folder id where the music ends up in
+
+```

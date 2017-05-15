@@ -7,6 +7,10 @@ var fs = require('fs');
 var deasync = require('deasync');
 var drive = require('./drive.js');
 var bash = require('child_process');
+var argv = require('argv');
+argv.option(getOptions());
+argv.info('Make sure you run setup.js once before! \nEither provide folderid and playlisturl via a .env file in the root directory like this: \nparentfolderid=<id>\nplaylisturl=<url>\nor via the arguments explained below');
+var args = argv.run();
 
 var pathlist = pj(__dirname, "playlist");
 var pathdownload = pj(__dirname, "downloads");
@@ -22,7 +26,6 @@ drive.init(function () {
 		console.log("done and done");
 	});
 });
-
 
 function readList() {
 	if (fs.existsSync(pathlist)) {
@@ -42,7 +45,7 @@ function readList() {
 }
 
 function getDifference(callback) {
-	yt.get(process.env.PLAYLISTURL, function (info) {
+	yt.get(args.options.url || process.env.playlisturl, function (info) {
 		if (isNew(info.video_id)) {
 			todo.push(info);
 		}
@@ -99,7 +102,7 @@ function registerDownloaded(info) {
 }
 
 function uploadToDrive(info, callback) {
-	drive.uploadFileWithParent(info.title.clean()+".aac",process.env.PARENTFOLDERID,fs.createReadStream(pj(pathdownload,info.title.clean()+".aac")),callback);
+	drive.uploadFileWithParent(info.title.clean()+".aac",args.options.folderid || process.env.parentfolderid,fs.createReadStream(pj(pathdownload,info.title.clean()+".aac")),callback);
 }
 
 function convertToAac(info, callback) {
@@ -115,4 +118,20 @@ function rmDownloads(){
 
 String.prototype.clean = function(){
 	return this.replace(/\/|\\/g," ");
+}
+
+function getOptions() {
+    return [
+        {
+            name: 'url',
+            short: 'u',
+            type: 'string',
+            description: 'Your public playlist url'
+        }, {
+            name: 'folderid',
+            short: 'f',
+            type: 'string',
+            description: 'Your folder id where the music ends up in'
+        }
+    ];
 }

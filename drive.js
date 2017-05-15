@@ -6,8 +6,12 @@ module.exports.uploadFile = uploadFile;
 module.exports.uploadFileWithParent = uploadFileWithParent;
 
 function init(callback) {
-	require('./google.js')(['https://www.googleapis.com/auth/drive'], function (gl) {
+	require('./google.js').getSavedClient(function (gl) {
 		google = gl;
+		if(google.scope.toString().indexOf('https://www.googleapis.com/auth/drive') == -1){
+			console.log("Wrong scope used, requiring 'https://www.googleapis.com/auth/drive' scope");
+			process.exit();
+		}
 		drive = google.drive({
 			version: 'v3'
 		});
