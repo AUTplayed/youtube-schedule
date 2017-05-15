@@ -54,7 +54,7 @@ or via the arguments explained below
 	--folderid, -f
 		Your folder id where the music ends up in
 
-    --apikey, -k
-                    Your youtube data v3 api key
+    	--apikey, -k
+	    	Your youtube data v3 api key
 
 ```
