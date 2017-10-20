@@ -46,7 +46,10 @@ function readList() {
 
 function getDifference(callback) {
 	yt.get(args.options.url || process.env.playlisturl, args.options.apikey || process.env.apikey, function (info) {
-		if (isNew(info.video_id)) {
+		if(!info.video_id){
+			console.log(info);
+		}
+		else if (isNew(info.video_id)) {
 			todo.push(info);
 		}
 	}, callback);
