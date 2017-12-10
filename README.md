@@ -60,3 +60,5 @@ or via the arguments explained below
 	    	Your youtube data v3 api key
 
 ```
+
+To get the folderid just go to https://drive.google.com and open a folder. The id is now in the url: https://drive.google.com/drive/folders/<id>
