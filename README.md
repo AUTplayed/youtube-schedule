@@ -61,4 +61,4 @@ or via the arguments explained below
 
 ```
 
-To get the folderid just go to https://drive.google.com and open a folder. The id is now in the url: https://drive.google.com/drive/folders/<id>
+To get the folderid just go to https://drive.google.com and open a folder. The id is now in the url: https://drive.google.com/drive/folders/your_id
